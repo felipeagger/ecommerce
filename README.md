@@ -3,7 +3,7 @@ An simplified e-commerce using top technologies to support high availability.
 
 # Technologies
 
-made with microservices in Quarkus (Java) and Golang using:
+Made with microservices in **Quarkus (Java) and Golang** using:
 
 * ElasticSearch
 * DynamoDB
