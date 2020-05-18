@@ -1,0 +1,69 @@
+{% interface
+Base {
+    CSS()
+    JS()
+    Title()
+    Body()
+}
+%}
+
+{% func BaseLayout(b Base) %}
+
+<!DOCTYPE html>
+
+<html lang="pt">
+
+    <!-- begin::Head -->
+    <head>
+        <base href="">
+        <meta charset="utf-8" />
+        <title>{%= b.Title() %} | E-Commerce</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+        <style>	
+        #title {
+        margin: 30px 30px;
+        padding: 10px 0;
+        text-align: left;
+        }
+
+        #main-container {
+        margin: 40px 40px;
+        padding: 10px 0;
+        text-align: center;
+        }
+
+        #aolado {
+        flex-direction: column;
+        }
+
+        .container {
+        display: flex;
+        justify-content: center;
+        }
+        .center {
+        width: 800px;
+        display: flex;
+        justify-content: center;
+        }
+    </style>
+    </head>
+
+    <!-- end::Head -->
+
+    <!-- begin::Body -->
+    <body>
+
+        {%= b.Body() %}
+
+    </body>
+        
+        {%= b.JS() %}
+
+{% endfunc %}

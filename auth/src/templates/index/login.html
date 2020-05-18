@@ -1,0 +1,171 @@
+{% import ("github.com/valyala/fasthttp") 
+%}
+	
+{% code
+type LoginPage struct {
+	CTX *fasthttp.RequestCtx
+}
+%}
+
+{% func (p *LoginPage) CSS() %} {% endfunc %}
+
+{% func (p *LoginPage) Title() %} Login {% endfunc %}
+
+
+{% func (p *LoginPage) Body() %}
+
+<nav class="navbar navbar-inverse">
+<div class="container-fluid">
+<div class="navbar-header">
+    <a class="navbar-brand" href="http://ecommerce/">E-Commerce</a>
+</div>
+<ul class="nav navbar-nav">
+    <li class="active"><a href="http://ecommerce/">Home</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" action="http://ecommerce/catalog" method="GET">
+    <div class="form-group"> 
+    <input type="text" class="form-control" placeholder="Search" style="width:370px;" name="search">
+    </div>  
+    <button id="btn-view" type="submit" class="btn btn-default" style="width:100px" value="Search">
+    <span class="glyphicon glyphicon-search"></span> Search
+    </button>
+</form> 
+
+<ul class="nav navbar-nav navbar-right">
+    <li><a href="http://ecommerce/orders/"><span class="glyphicon glyphicon-align-justify"></span> Orders</a></li>
+    <li><a href="http://ecommerce/cart/"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
+    <li><a href="http://ecommerce/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+    <li><a href="http://ecommerce/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+</ul>
+</div>
+</nav>
+
+
+
+<h1 id="title">Account</h1>
+
+<div class="container">  
+
+<div class="center">
+
+    <form id="login-form" class="form" action="http://ecommerce/login" method="POST" onsubmit="return login()">
+
+    <h3 style="text-align: center">Login</h3>
+
+    <div class="form-group" style="width: 400px;">
+        <label for="username" class="text-info">User</label><br>
+        <input type="text" style="width: 400px; margin: 0 auto;" name="username" id="username" class="form-control" placeholder="E-Mail">
+    </div>
+    <div class="form-group" style="width: 400px;">
+        <label for="password" class="text-info">Password</label><br>
+        <input type="password" style="width: 400px; margin: 0 auto;" name="password" id="password" class="form-control" placeholder="Password">
+    </div>
+    <div class="form-group" style="width: 400px;">
+        <input style="width: 70px; margin-left: 160px;" id="btnLogin" class="btn btn-info btn-md" value="Login" onclick="login()" readonly>
+        <br>
+        <a href="http://ecommerce/signup" class="text-info" style="text-align: right">Register here</a>
+    </div>
+
+    <div id="success" class="alert alert-success" role="alert" style="visibility: hidden">
+        <h4 id="msgs">
+    </div>
+
+    <div id="fail" class="alert alert-danger" role="alert" style="visibility: hidden">
+        <h4 id="msgf">
+    </div>
+
+    </form>
+
+</div>
+
+</div>
+
+<script>
+
+function validateForm() {
+  var username = document.getElementById('username').value;
+  var password = document.getElementById('password').value;
+
+  if (username.trim() == "" || password.trim() == "") {
+    alert("Username and password is required");
+    return false;
+  }
+
+  return true;
+}
+
+function login(){
+
+    if (validateForm()){
+   
+        const frmdata = new FormData();
+        var username = document.getElementById('username').value;
+        frmdata.append('username', username);
+        frmdata.append('password', document.getElementById('password').value);
+
+        $.ajax({
+            url: 'http://ecommerce/login',
+            processData: false,
+            contentType: false,
+            cache: false,
+            method: 'POST',
+            dataType: 'json',
+            data: frmdata,
+            success: function(data) {
+                //localStorage.setItem("username", username);
+                //localStorage.setItem("token", data['token']);
+
+                setCookie('userId', data['userId'], 1); 
+                setCookie('token', data['token'], 1);
+                
+                document.getElementById("msgs").innerHTML = "Login Successful"
+                document.getElementById("success").style.visibility = "visible";
+                document.getElementById("fail").style.visibility = "hidden";
+
+                window.location.replace("http://ecommerce/");
+            },
+            error: function(data) {
+                document.getElementById("msgf").innerHTML = "Username or Password Incorrect!"
+                document.getElementById("fail").style.visibility = "visible";
+                document.getElementById("success").style.visibility = "hidden";
+                console.log("Error:");
+                console.log(data);
+            }
+        });
+
+    }
+}
+
+function setCookie(name, value, days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+}
+
+var inputPasswd = document.getElementById("password");
+
+inputPasswd.addEventListener("keyup", function(event) {
+ 
+  if (event.keyCode === 13) {
+
+    event.preventDefault();
+    document.getElementById("btnLogin").click();
+
+  }
+});
+
+function eraseCookie(name) {   
+    document.cookie = name+'=; Max-Age=-99999999;';  
+}
+    
+</script>
+
+{% endfunc %}
+
+
+{% func (p *LoginPage) JS() %} {% endfunc %}

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="utf-8">
+
+    <title>E-Commerce</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>	
+    #title {
+      margin: 30px 30px;
+      padding: 10px 0;
+      text-align: left;
+    }
+
+    #main-container {
+      align: center;
+      margin: 40px 40px;
+      padding: 10px 0;
+      text-align: center;
+    }
+
+    #main-container-ul {
+        padding: 10px 0;
+        text-align: center;
+        list-style: none;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr); 
+        grid-gap: 100px;
+    }
+
+    #main-container-ul-li {
+        display: flex;
+        flex-direction: column;
+        cursor: pointer; 
+        max-width: 230px;
+        max-height: 270px;
+        margin-bottom: 30px;
+        border: 2px solid #eee;
+    }
+
+    #imgItem {
+      left: 0px;
+      top: 0px;
+      height: 170px;
+      width: 227px;
+      max-height: 170px;
+      max-width: 227px;
+      display: block;
+      border-radius: 5px 5px 5px 5px;
+      cursor: pointer; 
+      object-fit: contain;
+    }
+
+    #main-container-footer {
+        flex: 1;
+        background: #FFF;
+        border: 1px solid #eee;
+        padding: 15px 20px;
+        text-align: left;
+        border-radius: 0 0 5px 5px;
+        cursor: pointer; 
+        flex-direction: column;
+    }
+
+    #main-container-footer-strong {
+        font-size: 16px;
+        color: #333;
+    }
+
+    #main-container-footer-strong-price {
+        font-size: 30px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    #main-container-footer-p {
+        font-size: 14px;
+        line-height: 20px;
+        color: #999;
+        margin-top: 5px;
+    }
+
+    #div-btn-view-cart {
+      flex-direction: column;
+    }
+
+    #btn-view {
+      width: 70px;
+    }
+    #btn-cart {
+      width: 100px;
+    }
+
+    #empty {
+        font-size: 32px;
+        color: #999;
+        font-weight: bold;
+        margin-top: 300px;
+    }
+
+    #search {
+      flex-direction: column;
+      margin: 40px 40px;
+    }
+
+    </style>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="http://ecommerce/">E-Commerce</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="http://ecommerce/">Home</a></li>
+        </ul>
+        
+        <form class="navbar-form navbar-left" action="http://ecommerce/catalog" method="GET">
+          <div class="form-group"> 
+            <input type="text" class="form-control" placeholder="Search" style="width:400px;" name="search">
+          </div>  
+          <button id="btn-view" type="submit" class="btn btn-default" style="width:100px" value="Search">
+          <span class="glyphicon glyphicon-search"></span> Search
+          </button>
+        </form> 
+
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="http://ecommerce/orders/"><span class="glyphicon glyphicon-align-justify"></span> Orders</a></li>
+          <li><a href="http://ecommerce/cart/"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
+          <li><a href="http://ecommerce/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+          <li><a href="http://ecommerce/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+        </ul>
+      </div>
+    </nav>
+
+   
+
+      <h1 id="title">Catalog</h1>
+
+      <div id="main-container">  
+
+      
+        {#if catalog.size == 0} 
+          <div id="empty">No items found! :(</div>
+        {#else}
+
+        <ul id="main-container-ul"> 
+
+        {#for item in catalog}  
+          
+            <li id="main-container-ul-li" key="http://ecommerce/item/{item.id}">
+
+                <a href="http://ecommerce/item/{item.id}">
+                <img src={item.img_avatar} alt={item.title} id="imgItem"/>
+                </a>
+    
+                <footer id="main-container-footer">
+                    <a href="http://ecommerce/item/{item.id}">
+                      <strong id="main-container-footer-strong">{item.title}</strong>
+                      <!--p id="main-container-footer-p">{item.description}</p-->
+                      <br>
+                      <strong id="main-container-footer-strong-price">R$ {item.getPrice()}</strong>
+                    </a>
+
+                    <div id="div-btn-view-cart">
+                    <a id="btn-view" type="button" class="btn btn-success" href="http://ecommerce/item/{item.id}">View</a>
+                    <a id="btn-cart" type="button" class="btn btn-primary" href="http://ecommerce/{item.id}/cart">Add to Cart</a>
+                    <div>                    
+                </footer>
+            
+            </li>
+        
+        {/for}
+        
+        </ul>
+
+        {/if}
+      
+
+      </div>
+
+
+  </body>
+</html>

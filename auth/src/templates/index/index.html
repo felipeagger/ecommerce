@@ -1,0 +1,22 @@
+{% import ("github.com/valyala/fasthttp") 
+%}
+	
+{% code
+type IndexPage struct {
+	CTX *fasthttp.RequestCtx
+}
+%}
+
+{% func (p *IndexPage) CSS() %} {% endfunc %}
+
+{% func (p *IndexPage) Title() %} HomePage {% endfunc %}
+
+
+{% func (p *IndexPage) Body() %}
+
+Felipe Agger
+
+{% endfunc %}
+
+
+{% func (p *IndexPage) JS() %} {% endfunc %}
