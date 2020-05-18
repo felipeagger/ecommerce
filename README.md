@@ -12,7 +12,15 @@ made with microservices in Quarkus (Java) and Golang using:
 
 * Nginx (local APIGateway)
 
-# Architecture of ecommerce:
+# Architecture:
 
-![Image of Architecture](architecture.jpeg)
+![Image of Architecture](/media/architecture.jpeg)
+
+# Operation View Itens:
+
+![GIF of Operation View Itens](/media/View-and-add-itens.gif)
+
+# Operation Checkout:
+
+![GIF of Operation Checkout](/media/Checkout-Cart.gif)
 
